@@ -58,6 +58,7 @@ Enumeration *Enum_Ref_Par;
       *Enum_Ref_Par = Ident_3;
       break;
   } /* switch */
+  return 0;
 } /* Proc_6 */
 
 
@@ -78,6 +79,7 @@ One_Fifty      *Int_Par_Ref;
 
   Int_Loc = Int_1_Par_Val + 2;
   *Int_Par_Ref = Int_2_Par_Val + Int_Loc;
+  return 0;
 } /* Proc_7 */
 
 
@@ -103,6 +105,7 @@ int             Int_2_Par_Val;
   Arr_2_Par_Ref [Int_Loc] [Int_Loc-1] += 1;
   Arr_2_Par_Ref [Int_Loc+20] [Int_Loc] = Arr_1_Par_Ref [Int_Loc];
   Int_Glob = 5;
+  return 0;
 } /* Proc_8 */
 
 

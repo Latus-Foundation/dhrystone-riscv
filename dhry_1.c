@@ -18,7 +18,7 @@
 #include "dhry.h"
 
 #ifndef DHRY_ITERS
-#define DHRY_ITERS 2000
+#define DHRY_ITERS 1000000
 #endif
 
 /* Global Variables: */
@@ -32,7 +32,7 @@ char            Ch_1_Glob,
 int             Arr_1_Glob [50];
 int             Arr_2_Glob [50] [50];
 
-extern char     *malloc ();
+//extern char     *malloc ();
 Enumeration     Func_1 ();
   /* forward declaration necessary since Enumeration may not simply be int */
 
@@ -42,7 +42,8 @@ Enumeration     Func_1 ();
         /* REG becomes defined as empty */
         /* i.e. no register variables   */
 #else
-        Boolean Reg = true;
+        //Boolean Reg = true;
+        Boolean Reg = false;
 #endif
 
 /* variables for time measurement: */
@@ -73,6 +74,20 @@ float           Microseconds,
 
 /* end of variables for time measurement */
 void do_dhrystone() {
+    REG   int             Number_Of_Runs;
+    printf ("Starting Dhrystone ...\n");
+#ifdef DHRY_ITERS
+    Number_Of_Runs = DHRY_ITERS;
+#else
+    printf ("Please give the number of runs through the benchmark: ");
+  {
+    int n;
+    scanf ("%d", &n);
+    Number_Of_Runs = n;
+  }
+  printf ("\n");
+#endif
+    printf ("Execution starts, %d runs through Dhrystone\n", 10);
         One_Fifty       Int_1_Loc;
   REG   One_Fifty       Int_2_Loc;
         One_Fifty       Int_3_Loc;
@@ -82,6 +97,7 @@ void do_dhrystone() {
         Str_30          Str_2_Loc;
   REG   int             Run_Index;
 
+    Begin_Time = time ( (long *) 0);
   for (Run_Index = 1; Run_Index <= DHRY_ITERS; ++Run_Index)
   {
 
@@ -126,11 +142,45 @@ void do_dhrystone() {
     Proc_2 (&Int_1_Loc);
       /* Int_1_Loc == 5 */
 
-  } /* loop "for Run_Index" */
+  }
+    End_Time = time ( (long *) 0);
+
+    User_Time = End_Time - Begin_Time;
+
+    if (User_Time < Too_Small_Time)
+    {
+        printf ("Measured time too small to obtain meaningful results\n");
+        printf ("Please increase number of runs\n");
+        printf ("\n");
+    }
+    else
+    {
+#ifdef TIME
+        Microseconds = (float) User_Time * Mic_secs_Per_Second
+                        / (float) Number_Of_Runs;
+    Dhrystones_Per_Second = (float) Number_Of_Runs / (float) User_Time;
+#else
+        Microseconds = (float) User_Time * Mic_secs_Per_Second
+                       / ((float) HZ * ((float) Number_Of_Runs));
+        Dhrystones_Per_Second = ((float) HZ * (float) Number_Of_Runs)
+                                / (float) User_Time;
+#endif
+        printf ("Microseconds for one run through Dhrystone: ");
+        printf ("%f \n", Microseconds);
+        printf ("%d \n", (int)Microseconds);
+        printf ("Dhrystones per Second:                      ");
+        printf ("%f \n", Dhrystones_Per_Second);
+        printf ("%d \n", (int)Dhrystones_Per_Second);
+        printf ("\n");
+    }
+
+  /* loop "for Run_Index" */
+    printf("Exiting...");
+  asm ("ebreak");
 }
 
 #ifdef WITH_MAIN
-#include <stdio.h>
+//#include <stdio.h>
 
 main ()
 /*****/
@@ -351,7 +401,10 @@ main ()
     printf ("%d \n", (int)Dhrystones_Per_Second);
     printf ("\n");
   }
-  
+
+      printf("Exiting...");
+  asm ("ebreak");
+
 }
 
 #endif
@@ -387,6 +440,7 @@ REG Rec_Pointer Ptr_Val_Par;
   }
   else /* not executed */
     structassign (*Ptr_Val_Par, *Ptr_Val_Par->Ptr_Comp);
+    return 0;
 } /* Proc_1 */
 
 
@@ -410,6 +464,7 @@ One_Fifty   *Int_Par_Ref;
       Enum_Loc = Ident_1;
     } /* if */
   while (Enum_Loc != Ident_1); /* true */
+  return 0;
 } /* Proc_2 */
 
 
@@ -425,6 +480,7 @@ Rec_Pointer *Ptr_Ref_Par;
     /* then, executed */
     *Ptr_Ref_Par = Ptr_Glob->Ptr_Comp;
   Proc_7 (10, Int_Glob, &Ptr_Glob->variant.var_1.Int_Comp);
+  return 0;
 } /* Proc_3 */
 
 
@@ -437,6 +493,7 @@ Proc_4 () /* without parameters */
   Bool_Loc = Ch_1_Glob == 'A';
   Bool_Glob = Bool_Loc | Bool_Glob;
   Ch_2_Glob = 'B';
+  return 0;
 } /* Proc_4 */
 
 
@@ -446,6 +503,7 @@ Proc_5 () /* without parameters */
 {
   Ch_1_Glob = 'A';
   Bool_Glob = false;
+  return 0;
 } /* Proc_5 */
 
 
