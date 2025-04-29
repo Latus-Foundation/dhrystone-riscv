@@ -87,7 +87,7 @@ void do_dhrystone() {
   }
   printf ("\n");
 #endif
-    printf ("Execution starts, %d runs through Dhrystone\n", 10);
+    printf ("Execution starts, %d runs through Dhrystone\n", Number_Of_Runs);
         One_Fifty       Int_1_Loc;
   REG   One_Fifty       Int_2_Loc;
         One_Fifty       Int_3_Loc;
