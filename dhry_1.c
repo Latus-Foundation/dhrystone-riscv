@@ -166,11 +166,11 @@ void do_dhrystone() {
                                 / (float) User_Time;
 #endif
         printf ("Microseconds for one run through Dhrystone: ");
-        printf ("%f \n", Microseconds);
-        printf ("%d \n", (int)Microseconds);
+        printf ("%6.1f \n", Microseconds);
+        //printf ("%d \n", (int)Microseconds);
         printf ("Dhrystones per Second:                      ");
-        printf ("%f \n", Dhrystones_Per_Second);
-        printf ("%d \n", (int)Dhrystones_Per_Second);
+        printf ("%6.1f \n", Dhrystones_Per_Second);
+        //printf ("%d \n", (int)Dhrystones_Per_Second);
         printf ("\n");
     }
 
