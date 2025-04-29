@@ -374,6 +374,8 @@ main ()
   printf ("\n");
 
   User_Time = End_Time - Begin_Time;
+  printf ("User Time: %ld.%02ld seconds\n",
+          User_Time / 1000000, User_Time % 1000000);
 
   if (User_Time < Too_Small_Time)
   {
@@ -384,20 +386,22 @@ main ()
   else
   {
 #ifdef TIME
+    printf("Using time()\n");
     Microseconds = (float) User_Time * Mic_secs_Per_Second 
                         / (float) Number_Of_Runs;
     Dhrystones_Per_Second = (float) Number_Of_Runs / (float) User_Time;
 #else
+    printf("Using HZ=%d\n", HZ);
     Microseconds = (float) User_Time * Mic_secs_Per_Second 
                         / ((float) HZ * ((float) Number_Of_Runs));
     Dhrystones_Per_Second = ((float) HZ * (float) Number_Of_Runs)
                         / (float) User_Time;
 #endif
     printf ("Microseconds for one run through Dhrystone: ");
-    //printf ("%6.1f \n", Microseconds);
+    printf ("%6.1f \n", Microseconds);
     printf ("%d \n", (int)Microseconds);
     printf ("Dhrystones per Second:                      ");
-    //printf ("%6.1f \n", Dhrystones_Per_Second);
+    printf ("%6.1f \n", Dhrystones_Per_Second);
     printf ("%d \n", (int)Dhrystones_Per_Second);
     printf ("\n");
   }
